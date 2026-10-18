@@ -20,11 +20,19 @@ export default function Page() {
     if (!url.trim()) return
     const cleanAlias = alias.trim().replace(/[^a-zA-Z0-9-_]/g, '')
     const generated = cleanAlias || Math.random().toString(36).slice(2, 8)
-    const shortLink = `univotechain.xyz/${generated}`
+    const response = await fetch(`/${generated}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: url.trim(), slug: generated }),
+    })
+
+    if (!response.ok) return
+
+    const shortLink = `${window.location.host}/${generated}`
     setResult(shortLink)
     setCopied(false)
     try {
-      await navigator.clipboard.writeText(`https://${shortLink}`)
+      await navigator.clipboard.writeText(`${window.location.protocol}//${shortLink}`)
       setCopied(true)
     } catch {
       // Clipboard access can be unavailable in embedded previews.
