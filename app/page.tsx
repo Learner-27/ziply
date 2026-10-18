@@ -12,14 +12,23 @@ export default function Page() {
   const [url, setUrl] = useState('')
   const [alias, setAlias] = useState('')
   const [result, setResult] = useState('')
+  const [copied, setCopied] = useState(false)
   const [dark, setDark] = useState(false)
 
-  function shorten(event: FormEvent<HTMLFormElement>) {
+  async function shorten(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (!url.trim()) return
     const cleanAlias = alias.trim().replace(/[^a-zA-Z0-9-_]/g, '')
     const generated = cleanAlias || Math.random().toString(36).slice(2, 8)
-    setResult(`univotechain.xyz/${generated}`)
+    const shortLink = `univotechain.xyz/${generated}`
+    setResult(shortLink)
+    setCopied(false)
+    try {
+      await navigator.clipboard.writeText(`https://${shortLink}`)
+      setCopied(true)
+    } catch {
+      // Clipboard access can be unavailable in embedded previews.
+    }
   }
 
   return (
@@ -48,7 +57,17 @@ export default function Page() {
             <input id="alias" placeholder="Custom alias" value={alias} onChange={(event) => setAlias(event.target.value)} />
             <small>Optional custom alias</small>
           </div>
-          {result && <output className="result" aria-live="polite">Your short link: <strong>{result}</strong></output>}
+          {result && (
+            <output className="result" aria-live="polite">
+              <span>Your short link: <strong>{result}</strong></span>
+              <button type="button" onClick={async () => {
+                await navigator.clipboard.writeText(`https://${result}`)
+                setCopied(true)
+              }}>
+                {copied ? 'Copied' : 'Copy link'}
+              </button>
+            </output>
+          )}
         </form>
         <div className="trust-row"><span>No sign-up required</span><span>Lightning fast redirects</span><span>Simple analytics</span></div>
       </section>
