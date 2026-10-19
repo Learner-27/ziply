@@ -30,7 +30,8 @@ export default function Page() {
 
     if (!response.ok) return
 
-    const shortLink = `${window.location.host}/${generated}`
+    const hostname = window.location.hostname.replace(/^www\./, '')
+    const shortLink = `${hostname}${window.location.port ? `:${window.location.port}` : ''}/${generated}`
     const fullLink = `${window.location.protocol}//${shortLink}`
     setResult(shortLink)
     setQrCode(await QRCode.toDataURL(fullLink, {
