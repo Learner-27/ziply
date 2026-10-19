@@ -37,7 +37,7 @@ export default function Page() {
     setQrCode(await QRCode.toDataURL(fullLink, {
       width: 220,
       margin: 2,
-      color: { dark: '#161616', light: '#ffffff' },
+      color: { dark: '#172554', light: '#ffffff' },
     }))
     setCopied(false)
     try {
