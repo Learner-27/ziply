@@ -2,16 +2,21 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 
-:root { --ink: #0b1733; --muted: #63708a; --line: #dbe3f2; --paper: #f8fbff; --accent: #1687ee; --accent-deep: #263eea; --violet: #842cf3; --accent-soft: #e8f3ff; }
+:root { --ink: #10172d; --muted: #5f6b86; --line: #d9def0; --paper: #f1f3ff; --accent: #1687ee; --accent-deep: #3848ed; --violet: #842cf3; --accent-soft: #e7ebff; --surface: rgba(255,255,255,.78); }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
 button, input { font: inherit; }
-.site-shell { min-height: 100vh; overflow: hidden; background: var(--paper); transition: .25s ease; }
+.site-shell { min-height: 100vh; overflow: hidden; background: radial-gradient(circle at 50% -10%, rgba(132,44,243,.14), transparent 34%), linear-gradient(180deg, #f5f6ff 0%, var(--paper) 48%, #eef4ff 100%); transition: .25s ease; }
+.site-shell::before { content: ''; position: fixed; inset: 0; pointer-events: none; opacity: .32; background-image: radial-gradient(rgba(56,72,237,.11) 1px, transparent 1px); background-size: 24px 24px; mask-image: linear-gradient(to bottom, black, transparent 70%); }
+.site-shell > * { position: relative; }
+.site-shell.dark-mode { background: radial-gradient(circle at 50% -10%, rgba(132,44,243,.2), transparent 34%), linear-gradient(180deg, #0d1430 0%, #091326 100%); }
 .site-shell.dark-mode { --ink: #f4f7ff; --muted: #a8b5cf; --line: #293858; --paper: #091326; --accent-soft: #12294a; }
 .container { width: min(1110px, calc(100% - 48px)); margin-inline: auto; }
-.nav { height: 93px; display:flex; align-items:center; justify-content:space-between; border-bottom: 1px solid var(--line); }
-.brand { color: var(--ink); font-size: 25px; font-weight: 800; letter-spacing: -.09em; text-decoration:none; }
+.nav { height: 93px; display:flex; align-items:center; justify-content:space-between; border-bottom: 1px solid var(--line); background: transparent; }
+.brand { display:flex; align-items:center; color:var(--ink); text-decoration:none; }
+.brand img { display:block; width:146px; height:auto; }
+.footer .brand img { width:128px; }
 .nav nav { display:flex; align-items:center; gap: 28px; }
 .nav nav a { color: var(--ink); text-decoration:none; font-size:13px; }
 .theme-toggle { border:0; background:transparent; color:var(--ink); font-size:22px; cursor:pointer; line-height:1; transform: rotate(180deg); }

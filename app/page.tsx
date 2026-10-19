@@ -51,7 +51,7 @@ export default function Page() {
   return (
     <main className={dark ? 'site-shell dark-mode' : 'site-shell'}>
       <header className="nav container">
-        <a className="brand" href="#top" aria-label="Ziply home">ziply</a>
+        <a className="brand" href="#top" aria-label="Ziply home"><img src="/ziply-logo.png" alt="Ziply — Links, faster" /></a>
         <nav aria-label="Primary navigation">
           <a href="#how-it-works">How it works</a>
           <button className="theme-toggle" type="button" onClick={() => setDark(!dark)} aria-label="Toggle theme">◐</button>
