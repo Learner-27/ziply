@@ -29,7 +29,13 @@ em { color: #9ab73b; font-family: Georgia, serif; font-weight:400; }
 .alias-row { display:flex; align-items:center; gap:7px; margin:10px 0 0 17px; color:var(--muted); font-size:12px; }
 .alias-row input { border:0; border-bottom:1px solid var(--line); width:116px; padding:5px 2px; background:transparent; color:var(--ink); outline:none; }
 .alias-row small { margin-left:auto; font-size:11px; color:#aaa; }
-.result { display:block; background:var(--lime); color:#263000; padding:12px 16px; margin-top:14px; border-radius:4px; font-size:13px; }
+.result { display:flex; align-items:center; justify-content:space-between; gap:20px; background:var(--lime); color:#263000; padding:12px 16px; margin-top:14px; border-radius:4px; font-size:13px; }
+.result-copy { display:flex; flex:1; min-width:0; flex-direction:column; gap:12px; }
+.result-copy strong { overflow-wrap:anywhere; }
+.result-actions { display:flex; align-items:center; gap:14px; }
+.result button, .download-qr { border:0; background:transparent; color:#263000; cursor:pointer; font-size:12px; font-weight:700; padding:0; text-decoration:none; }
+.download-qr { border-left:1px solid rgba(38,48,0,.25); padding-left:14px; }
+.qr-code { flex:none; width:92px; height:92px; border:5px solid white; border-radius:2px; }
 .trust-row { display:flex; justify-content:center; gap:34px; margin-top:27px; color:var(--muted); font-size:11px; }
 .trust-row span::before { content:'✓'; color:#9ab73b; margin-right:7px; font-weight:700; }
 .how { border-top:1px solid var(--line); padding: 86px 0 122px; }
