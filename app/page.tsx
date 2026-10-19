@@ -1,6 +1,7 @@
 'use client'
 
 import { FormEvent, useState } from 'react'
+import QRCode from 'qrcode'
 
 const steps = [
   ['01', 'Paste your URL', 'Drop in any long link you want to make more shareable.'],
@@ -12,6 +13,7 @@ export default function Page() {
   const [url, setUrl] = useState('')
   const [alias, setAlias] = useState('')
   const [result, setResult] = useState('')
+  const [qrCode, setQrCode] = useState('')
   const [copied, setCopied] = useState(false)
   const [dark, setDark] = useState(false)
 
@@ -29,7 +31,13 @@ export default function Page() {
     if (!response.ok) return
 
     const shortLink = `${window.location.host}/${generated}`
+    const fullLink = `${window.location.protocol}//${shortLink}`
     setResult(shortLink)
+    setQrCode(await QRCode.toDataURL(fullLink, {
+      width: 220,
+      margin: 2,
+      color: { dark: '#161616', light: '#ffffff' },
+    }))
     setCopied(false)
     try {
       await navigator.clipboard.writeText(`${window.location.protocol}//${shortLink}`)
@@ -67,13 +75,19 @@ export default function Page() {
           </div>
           {result && (
             <output className="result" aria-live="polite">
-              <span>Your short link: <strong>{result}</strong></span>
-              <button type="button" onClick={async () => {
-                await navigator.clipboard.writeText(`https://${result}`)
-                setCopied(true)
-              }}>
-                {copied ? 'Copied' : 'Copy link'}
-              </button>
+              <div className="result-copy">
+                <span>Your short link: <strong>{result}</strong></span>
+                <div className="result-actions">
+                  <button type="button" onClick={async () => {
+                    await navigator.clipboard.writeText(`https://${result}`)
+                    setCopied(true)
+                  }}>
+                    {copied ? 'Copied' : 'Copy link'}
+                  </button>
+                  <a href={qrCode} download={`ziply-${result.split('/').pop()}.png`} className="download-qr">Download QR</a>
+                </div>
+              </div>
+              {qrCode && <img className="qr-code" src={qrCode} alt={`QR code for ${result}`} />}
             </output>
           )}
         </form>
